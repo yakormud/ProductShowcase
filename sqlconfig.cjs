@@ -9,4 +9,7 @@ const config = {
   trustServerCertificate: false,
 };
 
-module.exports = sql;
+module.exports = {
+  sql: sql,
+  config: config
+};
