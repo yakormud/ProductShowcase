@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 #config
-sqlconfig.js
+sqlconfig.cjs
