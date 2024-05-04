@@ -8,15 +8,13 @@ function App() {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    axios.get('https://localhost:80/')
-      .then(res => {
-        const personsData = res.data;
-        console.log(personsData);
-        setPersons(personsData);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+    axios.get(`http://localhost:80/product`, {
+            }).then((res) => res.data).then(data => {
+                setPersons(data);
+            }).catch((error) => {
+                console.log(error);
+            });
+        
   }, []); // Empty dependency array means this effect will only run once after the component mounts
 
   return (

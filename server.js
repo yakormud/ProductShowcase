@@ -1,10 +1,19 @@
 import express from 'express';
+import cors from 'cors';
 import { sql, config } from './sqlconfig.cjs';
+
 
 const app = express();
 
+const corsOptions = {
+  origin: 'http://localhost:5175',
+  optionsSuccessStatus: 200 
+};
+
+app.use(cors(corsOptions));
+
 // Define your routes or SQL connection logic here
-app.get('/', (req, res) => {
+app.get('/product', (req, res) => {
   // Example SQL query
   sql.connect(config)
     .then(pool => {
