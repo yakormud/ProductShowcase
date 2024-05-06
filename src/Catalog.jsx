@@ -30,10 +30,10 @@ function Catalog() {
 
   return (
     <div className='catalog-container'>
-      <div className='sort-bar'>
+      {/* <div className='sort-bar'>
         <h2>Filter Option</h2>
         <h3>price</h3>
-      </div>
+      </div> */}
       <div className='content-bar'>
         <div className='content-header'>
           <h2>Products</h2>
