@@ -7,6 +7,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 function Catalog() {
   const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     axios.get(`http://localhost:80/product`, {
@@ -18,6 +19,15 @@ function Catalog() {
 
   }, []);
 
+  const filteredProducts = products.filter(product => {
+    return product.ProductName.toLowerCase().includes(search.toLowerCase());
+    
+  });
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div className='catalog-container'>
       <div className='sort-bar'>
@@ -28,14 +38,14 @@ function Catalog() {
         <div className='content-header'>
           <h2>Products</h2>
           <div className='search-wrap'>
-            <input type='text'></input>
+            <input type='text' value={search} onChange={handleSearchChange} placeholder='Search products...'></input>
             <div className='fit-content'>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
           </div>
         </div>
         <div className='flex-center width90'>
-          {products.map(product => (
+          {filteredProducts.map(product => (
             <div className="card" key={product.ProductID}>
               {/* <img src={`url_to_your_image_directory/${product.ProductID}.jpg`} alt={product.ProductName} /> */}
               <img src={adidaspic} alt={product.ProductName} />

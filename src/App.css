@@ -16,10 +16,11 @@ h5 {
 .navbar {
     gap: 60%;
     height: 50px;
-    background-color: whitesmoke;
+    background-color: rgb(0, 0, 0);
     display: flex;
     justify-content: space-around;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: white;
 }
 
 .navbar-menu {
@@ -72,27 +73,35 @@ h5 {
 .catalog-container {
     display: flex;
     justify-content: center;
-    width: 100vw;
+    align-items: start;
+    width: 100%;
 }
 
 .sort-bar {
     width: 20vw;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    min-height: 50vh;
 }
 
 .content-bar {
-    width: 80vw;
+    flex: 1; /* Take up remaining space */
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
 }
 
 .content-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    gap: 50%;
     align-items: center;
-    height: 100px;
-    width: 85%;
+    height: 70px;
+    width: 100%;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .content-header h2 {
@@ -125,6 +134,7 @@ h5 {
     margin: auto;
 }
 
+/* CARD */
 .flex-center {
     display: flex;
     justify-content: center;
@@ -132,17 +142,29 @@ h5 {
     flex-wrap: wrap;
 }
 
+
 .width90 {
-    gap: 40px;
+    gap: 30px;
     width: 90%;
+    margin-top: 2%;
 }
 
 .card {
-    width: 180px;
+    width: 150px;
     height: 300px;
-    border: 1px solid #000;
+    background-color: white;
+    padding: 1vw;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 5px;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.card:hover {
+    cursor: pointer;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transform: scale(1.05);
 }
 
 .card img {
-    width: 180px;
+    width: 150px;
 }
