@@ -19,15 +19,15 @@ function Catalog() {
     });
     axios.get(`http://localhost:80/category`, {
     }).then(res => res.data)
-    .then(categoryData => {
-      const categoryHashMap = categoryData.reduce((map, category) => {
-        map[category.CategoryID] = category.CategoryName;
-        return map;
-      }, {});
-      setCategoryMap(categoryHashMap);
-      console.log(categoryHashMap);
-    })
-    .catch(error => console.error('Error fetching categories:', error));
+      .then(categoryData => {
+        const categoryHashMap = categoryData.reduce((map, category) => {
+          map[category.CategoryID] = category.CategoryName;
+          return map;
+        }, {});
+        setCategoryMap(categoryHashMap);
+        console.log(categoryHashMap);
+      })
+      .catch(error => console.error('Error fetching categories:', error));
 
   }, []);
 
@@ -43,11 +43,10 @@ function Catalog() {
   return (
     <div className='catalog-container'>
       <div className='sort-bar'>
-        <div className='content-header'>
-        <div className='page-header'>
+          <div className='page-header'>
             <h1>FILTERS</h1>
           </div>
-        </div>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, laborum!</p>
       </div>
       <div className='content-bar'>
         <div className='content-header'>
