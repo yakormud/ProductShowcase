@@ -43,16 +43,16 @@ function Catalog() {
   return (
     <div className='catalog-container'>
       <div className='sort-bar'>
-          <div className='page-header'>
-            <h1>FILTERS</h1>
-          </div>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, laborum!</p>
+        <div className='page-header'>
+          <h1>FILTERS</h1>
+        </div>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, laborum!</p>
       </div>
       <div className='content-bar'>
         <div className='content-header'>
           <div className='flex page-header'>
             <h1>PRODUCTS</h1>
-            <span>(100)</span>
+            <span>({filteredProducts.length})</span>
           </div>
           <div className='search-wrap'>
             <input type='text' value={search} onChange={handleSearchChange} placeholder='Search products...'></input>
@@ -62,17 +62,21 @@ function Catalog() {
           </div>
         </div>
         <div className='flex-center width90'>
-          {filteredProducts.map(product => (
-            <div className="card" key={product.ProductID}>
-              {/* <img src={`url_to_your_image_directory/${product.ProductID}.jpg`} alt={product.ProductName} /> */}
-              <img src={adidaspic} alt={product.ProductName} />
-              <div className="card-details">
-                <h3>{product.ProductName}</h3>
-                <p>{categoryMap[product.CategoryID] || 'Category Not Found'}</p>
-                <p className='card-price'>${product.UnitPrice}</p>
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map(product => (
+              <div className="card" key={product.ProductID}>
+                {/* <img src={`url_to_your_image_directory/${product.ProductID}.jpg`} alt={product.ProductName} /> */}
+                <img src={adidaspic} alt={product.ProductName} />
+                <div className="card-details">
+                  <h3>{product.ProductName}</h3>
+                  <p>{categoryMap[product.CategoryID] || 'Category Not Found'}</p>
+                  <p className='card-price'>${product.UnitPrice}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No products found.</p>
+          )}
         </div>
       </div>
     </div>
