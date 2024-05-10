@@ -43,14 +43,14 @@ function Catalog() {
   return (
     <div className='catalog-container'>
       <div className='sort-bar'>
-        <div className='page-header'>
+        <div className='sort-header'>
           <h1>FILTERS</h1>
         </div>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, laborum!</p>
       </div>
       <div className='content-bar'>
         <div className='content-header'>
-          <div className='flex page-header'>
+          <div className='flex page-header' style={{width:"50px"}}>
             <h1>PRODUCTS</h1>
             <span>({filteredProducts.length})</span>
           </div>

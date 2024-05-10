@@ -117,13 +117,26 @@ body {
     flex-direction: column;
 }
 
-.sortbar > div{
+.sort-bar p {
     text-align: center;
     margin: auto;
 }
 
+
 .page-header {
     gap: 10px;
+    height: 70px;
+}
+
+.sort-header {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sort-header h1 {
+    font-weight: 600;
 }
 
 .page-header h1{
