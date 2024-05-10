@@ -11,7 +11,7 @@ function Navbar() {
             </div>
             <div className="flex navbar-menu">
                 <div className="flex highlight-btn">
-                    <FontAwesomeIcon icon={faUser}/>
+                    <FontAwesomeIcon icon={faUser} style={{color:"white"}}/>
                     <p>Login</p>
                 </div>
             </div>

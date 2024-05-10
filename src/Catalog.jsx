@@ -8,6 +8,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 function Catalog() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const [categoryMap, setCategoryMap] = useState({});
 
   useEffect(() => {
     axios.get(`http://localhost:80/product`, {
@@ -16,12 +17,23 @@ function Catalog() {
     }).catch((error) => {
       console.log(error);
     });
+    axios.get(`http://localhost:80/category`, {
+    }).then(res => res.data)
+    .then(categoryData => {
+      const categoryHashMap = categoryData.reduce((map, category) => {
+        map[category.CategoryID] = category.CategoryName;
+        return map;
+      }, {});
+      setCategoryMap(categoryHashMap);
+      console.log(categoryHashMap);
+    })
+    .catch(error => console.error('Error fetching categories:', error));
 
   }, []);
 
   const filteredProducts = products.filter(product => {
     return product.ProductName.toLowerCase().includes(search.toLowerCase());
-    
+
   });
 
   const handleSearchChange = (e) => {
@@ -30,13 +42,19 @@ function Catalog() {
 
   return (
     <div className='catalog-container'>
-      {/* <div className='sort-bar'>
-        <h2>Filter Option</h2>
-        <h3>price</h3>
-      </div> */}
+      <div className='sort-bar'>
+        <div className='content-header'>
+        <div className='page-header'>
+            <h1>FILTERS</h1>
+          </div>
+        </div>
+      </div>
       <div className='content-bar'>
         <div className='content-header'>
-          <h2>Products</h2>
+          <div className='flex page-header'>
+            <h1>PRODUCTS</h1>
+            <span>(100)</span>
+          </div>
           <div className='search-wrap'>
             <input type='text' value={search} onChange={handleSearchChange} placeholder='Search products...'></input>
             <div className='fit-content'>
@@ -51,8 +69,8 @@ function Catalog() {
               <img src={adidaspic} alt={product.ProductName} />
               <div className="card-details">
                 <h3>{product.ProductName}</h3>
-                <p>Price: ${product.UnitPrice}</p>
-                <p>In Stock: {product.UnitsInStock}</p>
+                <p>{categoryMap[product.CategoryID] || 'Category Not Found'}</p>
+                <p className='card-price'>${product.UnitPrice}</p>
               </div>
             </div>
           ))}

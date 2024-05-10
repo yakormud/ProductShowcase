@@ -12,15 +12,41 @@ h5 {
     font-weight: 400;
 }
 
+body {
+    overflow-y: scroll;
+}
+
+/* SCROLL BAR */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border: 1px solid #cacaca;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
 /* NAVBAR */
 .navbar {
-    gap: 60%;
-    height: 50px;
-    background-color: rgb(33, 33, 33);
+    gap: 50%;
+    height: 90px;
     display: flex;
     justify-content: space-around;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    color: white;
+    color: rgb(70, 70, 70);
 }
 
 .navbar-menu {
@@ -41,6 +67,10 @@ h5 {
     width: 40px;
 }
 
+.logo {
+    gap: 20px;
+}
+
 .highlight-btn img {
     width: 30px;
   }
@@ -52,11 +82,11 @@ h5 {
   
   .highlight-btn {
     padding: 5px;
-    background-color: rgb(255, 103, 103);
-    border-radius: 5px;
-    height: 50%;
-    padding-left: 10px;
-    padding-right: 10px;
+    background-color: rgb(248, 69, 69);
+    border-radius: 50px;
+    height: 30%;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .highlight-btn:hover {
@@ -66,9 +96,11 @@ h5 {
   .highlight-btn p {
     margin: 0;
     margin-left: 10px;
+    color: white;
   }
 
 /* CONTENT */
+
 
 .catalog-container {
     display: flex;
@@ -79,9 +111,20 @@ h5 {
 
 .sort-bar {
     width: 20vw;
-    background-color: rgb(0, 0, 0);
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    min-height: 50vh;
+}
+
+.page-header {
+    gap: 10px;
+}
+
+.page-header h1{
+    font-weight: 600;
+}
+
+.page-header span{
+    font-weight: 400;
+    font-size: 140%;
+    color: grey;
 }
 
 .content-bar {
@@ -96,12 +139,11 @@ h5 {
 .content-header {
     display: flex;
     justify-content: space-around;
-    gap: 50%;
+    gap: 20px;
     align-items: center;
     height: 70px;
     width: 100%;
     background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
 }
 
 .content-header h2 {
@@ -109,29 +151,32 @@ h5 {
 }
 
 .search-wrap {
-    width: 20vw;
-    background-color: rgb(255, 103, 103);
+    width: 25vw;
+    background-color: rgb(0, 0, 0);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 0 5px 5px 0;
+    border-radius: 50px 50px 50px 50px;
 }
 
 .search-wrap input {
     width: 85%;
     height: 30px;
     font-size: 100%;
+    border-radius: 50px 0 0 50px;
+    padding-left: 10px;
 }
 
 .search-wrap input:focus {
-    outline: 1px solid #000;
+    outline: none;
 }
 
 .fit-content {
-    min-width: 30px;
+    min-width: 40px;
     width: max-content;
     text-align: center;
     margin: auto;
+    color: white;
 }
 
 /* CARD */
@@ -154,17 +199,24 @@ h5 {
     height: 300px;
     background-color: white;
     padding: 1vw;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 5px;
-    transition: box-shadow 0.3s, transform 0.3s;
 }
 
 .card:hover {
     cursor: pointer;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     transform: scale(1.05);
+    background-color: whitesmoke;
 }
 
 .card img {
     width: 150px;
+}
+
+.card-details h3{
+    font-weight: 600;
+    font-size: 90%;
+}
+
+.card-price{
+    font-weight: 500;
 }
