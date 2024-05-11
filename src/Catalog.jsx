@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 import adidaspic from './assets/adidas.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 function Catalog() {
   const [products, setProducts] = useState([]);
@@ -12,6 +14,7 @@ function Catalog() {
   const [productImages, setProductImages] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     productCategory: '',
@@ -21,16 +24,30 @@ function Catalog() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     console.log(formData);
-};
+  };
+
+
 
   useEffect(() => {
-    axios.get(`http://localhost:80/category`, {
-    }).then((res) => res.data).then(data => {
-      setCategories(data);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }, []);
+    const hasSeenPopup = sessionStorage.getItem('hasSeenPopup');
+    if (!hasSeenPopup) {
+      // Display SweetAlert if the user hasn't seen it before
+      Swal.fire({
+        title: 'addProduct page has been successfully made, XD',
+        text: 'you can access it by editing url to path /addProduct, cuz I\'m too lazy to make a button',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'Let me try!',
+        cancelButtonText: 'No, stay this page',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // If the user clicks "Yes, go to addProduct", navigate to the addProduct page
+          navigate('/addProduct');
+          sessionStorage.setItem('hasSeenPopup', true);
+        }
+      });
+    }
+  }, [history]);
 
 
   useEffect(() => {
@@ -95,21 +112,21 @@ function Catalog() {
           <h1>FILTERS</h1>
         </div>
         <label>
-            Product Category:
-            <select
-              name="productCategory"
-              value={formData.productCategory}
-              onChange={handleChange}
-              required
-            >
-              <option value="">All</option>
-              {categories.map((category) => (
-                <option key={category.CategoryID} value={category.CategoryID}>
-                  {category.CategoryName}
-                </option>
-              ))}
-            </select>
-          </label>
+          Product Category:
+          <select
+            name="productCategory"
+            value={formData.productCategory}
+            onChange={handleChange}
+            required
+          >
+            <option value="">All</option>
+            {categories.map((category) => (
+              <option key={category.CategoryID} value={category.CategoryID}>
+                {category.CategoryName}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
       <div className='content-bar'>
         <div className='content-header'>

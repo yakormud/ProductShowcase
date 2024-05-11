@@ -24,6 +24,8 @@ const AddProduct = () => {
     const [categories, setCategories] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    
+
     useEffect(() => {
         axios.get(`http://localhost:80/category`, {
         }).then((res) => res.data).then(data => {
