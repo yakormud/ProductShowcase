@@ -9,6 +9,29 @@ function Catalog() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [categoryMap, setCategoryMap] = useState({});
+  const [productImages, setProductImages] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+
+  const [formData, setFormData] = useState({
+    productCategory: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    console.log(formData);
+};
+
+  useEffect(() => {
+    axios.get(`http://localhost:80/category`, {
+    }).then((res) => res.data).then(data => {
+      setCategories(data);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, []);
+
 
   useEffect(() => {
     axios.get(`http://localhost:80/product`, {
@@ -31,9 +54,34 @@ function Catalog() {
 
   }, []);
 
-  const filteredProducts = products.filter(product => {
-    return product.ProductName.toLowerCase().includes(search.toLowerCase());
+  useEffect(() => {
+    // Fetch images for products with pictures
+    products.forEach(product => {
+      if (product.PathToPhoto) {
+        const fileName = product.PathToPhoto.split("\\").pop();
+        axios.get(`http://localhost:80/image/${fileName}`)
+          .then((res) => res.data)
+          .then(data => {
+            setProductImages(prevImages => ({
+              ...prevImages,
+              [product.ProductID]: data // Store the fetched image data
+            }));
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+    console.log('All images fetched:', productImages);
+  }, [products]);
 
+  const filteredProducts = products.filter(product => {
+    // Filter by product name
+    const matchesSearch = product.ProductName.toLowerCase().includes(search.toLowerCase());
+    // Filter by product category
+    const matchesCategory = formData.productCategory === '' || formData.productCategory === product.CategoryID.toString();
+    return matchesSearch && matchesCategory;
   });
 
   const handleSearchChange = (e) => {
@@ -46,11 +94,26 @@ function Catalog() {
         <div className='sort-header'>
           <h1>FILTERS</h1>
         </div>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, laborum!</p>
+        <label>
+            Product Category:
+            <select
+              name="productCategory"
+              value={formData.productCategory}
+              onChange={handleChange}
+              required
+            >
+              <option value="">All</option>
+              {categories.map((category) => (
+                <option key={category.CategoryID} value={category.CategoryID}>
+                  {category.CategoryName}
+                </option>
+              ))}
+            </select>
+          </label>
       </div>
       <div className='content-bar'>
         <div className='content-header'>
-          <div className='flex page-header' style={{width:"50px"}}>
+          <div className='flex page-header' style={{ width: "50px" }}>
             <h1>PRODUCTS</h1>
             <span>({filteredProducts.length})</span>
           </div>
@@ -62,20 +125,28 @@ function Catalog() {
           </div>
         </div>
         <div className='flex-center width90'>
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map(product => (
-              <div className="card" key={product.ProductID}>
-                {/* <img src={`url_to_your_image_directory/${product.ProductID}.jpg`} alt={product.ProductName} /> */}
-                <img src={adidaspic} alt={product.ProductName} />
-                <div className="card-details">
-                  <h3>{product.ProductName}</h3>
-                  <p>{categoryMap[product.CategoryID] || 'Category Not Found'}</p>
-                  <p className='card-price'>${product.UnitPrice}</p>
-                </div>
-              </div>
-            ))
+          {isLoading ? ( // If loading state 
+            <p style={{ margin: 'auto' }}>Loading...</p>
           ) : (
-            <p>No products found.</p>
+            <>
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map(product => (
+                  <div className="card" key={product.ProductID}>
+                    <img
+                      src={productImages[product.ProductID] || adidaspic}
+                      alt={product.ProductName}
+                    />
+                    <div className="card-details">
+                      <h3>{product.ProductName}</h3>
+                      <p>{categoryMap[product.CategoryID] || 'Category Not Found'}</p>
+                      <p className='card-price'>${product.ProductPrice}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p style={{ margin: 'auto' }}>No products found.</p>
+              )}
+            </>
           )}
         </div>
       </div>

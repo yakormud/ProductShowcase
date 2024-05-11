@@ -121,6 +121,20 @@ body {
     text-align: center;
     margin: auto;
 }
+.sort-bar label {
+  text-align: center;
+}
+
+.sort-bar select{
+  width: 90%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-left: 10px;
+}
 
 
 .page-header {
@@ -174,7 +188,7 @@ body {
 
 .search-wrap {
     width: 25vw;
-    background-color: rgb(0, 0, 0);
+    background-color: #929292;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -187,6 +201,7 @@ body {
     font-size: 100%;
     border-radius: 50px 0 0 50px;
     padding-left: 10px;
+    border: 1px solid #ccc;
 }
 
 .search-wrap input:focus {
@@ -204,7 +219,7 @@ body {
 /* CARD */
 .flex-center {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -232,6 +247,7 @@ body {
 
 .card img {
     width: 150px;
+    height: 150px;
 }
 
 .card-details h3{
@@ -262,7 +278,7 @@ body {
 }
 
 .add-product-form{
-    flex: 1
+    flex: 1;
 }
   
   .back-arrow {
@@ -279,7 +295,6 @@ body {
   
   form {
     display: flex;
-    flex-direction: column;
   }
   
   .add-product-form label {
