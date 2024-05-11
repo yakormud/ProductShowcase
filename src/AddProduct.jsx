@@ -7,6 +7,7 @@ import defaultimage from './assets/adidas.png';
 import axios from 'axios';
 
 const AddProduct = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         productName: '',
         productCategory: '',
@@ -20,12 +21,11 @@ const AddProduct = () => {
     useEffect(() => {
         axios.get(`http://localhost:80/category`, {
         }).then((res) => res.data).then(data => {
-          setCategories(data);
-          console.log(data);
+            setCategories(data);
         }).catch((error) => {
-          console.log(error);
+            console.log(error);
         });
-      }, []);
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,16 +42,34 @@ const AddProduct = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const goBack = () => {
+        navigate(-1); // This is equivalent to navigate('back')
+      };
+
+    const handleRemovePhoto = () => {
+        setFormData({ ...formData, picture: null });
+        document.querySelector('input[type="file"]').value = null;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        try {
+            const formDataToSend = new FormData();
+            Object.keys(formData).forEach((key) => {
+                formDataToSend.append(key, formData[key]);
+            });
+            await axios.post('http://localhost:80/uploadproducts', formDataToSend);
+            console.log('Product added successfully!');
+        } catch (error) {
+            console.error('Error adding product:', error);
+        }
     };
 
     return (
         <div>
             <Navbar />
             <div className="add-product-container">
-                <div className="back-arrow">
+                <div className="back-arrow" onClick={goBack}>
                     <FontAwesomeIcon icon={faArrowLeft} />
                     <span>Back</span>
                 </div>
@@ -67,7 +85,10 @@ const AddProduct = () => {
                                 onChange={handleImageChange}
                             />
                         </label>
-                        <img src={formData.picture ? URL.createObjectURL(formData.picture) : defaultimage} alt="Product Preview" />
+                        <div className='img-container'>
+                            <img src={formData.picture ? URL.createObjectURL(formData.picture) : defaultimage} alt="Product Preview" />
+                            {formData.picture && (<button type="button" onClick={handleRemovePhoto}>Remove Photo</button>)}
+                        </div>
                     </div>
 
                     <form onSubmit={handleSubmit} className='add-product-form'>
