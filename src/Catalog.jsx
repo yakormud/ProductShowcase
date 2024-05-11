@@ -60,6 +60,8 @@ function Catalog() {
     axios.get(`http://localhost:80/category`, {
     }).then(res => res.data)
       .then(categoryData => {
+        setCategories(categoryData);
+        console.log(categories);
         const categoryHashMap = categoryData.reduce((map, category) => {
           map[category.CategoryID] = category.CategoryName;
           return map;
