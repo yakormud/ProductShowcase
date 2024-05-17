@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-// import { sql, config } from './sqlconfig.cjs';
+ import { config } from './sqlconfig.cjs';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import fs from 'fs';
@@ -18,14 +18,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-const config = {
-  server: 'productdb.czw620y8qg76.us-east-1.rds.amazonaws.com',
-  database: 'Product',
-  user: 'adminlogin',
-  password: '123456789',
-  encrypt: false,
-  trustServerCertificate: false,
-};
+// const config = {
+//   server: 'productdb.czw620y8qg76.us-east-1.rds.amazonaws.com',
+//   database: 'Product',
+//   user: 'adminlogin',
+//   password: '123456789',
+//   encrypt: false,
+//   trustServerCertificate: false,
+// };
 
 async function testConnection() {
   try {
