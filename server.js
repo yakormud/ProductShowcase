@@ -8,7 +8,6 @@ import sql from "mssql";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import createStore from 'react-auth-kit/createStore';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -17,13 +16,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+const config = {
+  server: 'productdb.czw620y8qg76.us-east-1.rds.amazonaws.com',
+  database: 'Product',
+  user: 'adminlogin',
+  password: '123456789',
+  encrypt: false,
+  trustServerCertificate: false,
+};
 
-const store = createStore({
-  authName:'_auth',
-  authType:'cookie',
-  cookieDomain: window.location.hostname,
-  cookieSecure: window.location.protocol === 'https:',
-});
 
 
 async function testConnection() {
@@ -57,10 +58,23 @@ app.post('/auth',(req,res) =>{
   
   sql.connect(config)
     .then(pool => {
-      return pool.request().input('UserName', sql.NVarChar, username).query('SELECT * FROM user WHERE userName=@UserName');
+      return pool.request()
+      .input('UserName', sql.NVarChar, username)
+      .input('Password',sql.NVarChar,password)
+      .query('SELECT * FROM user WHERE userName=@UserName');
     })
     .then(result => {
+      var status;
+      var user = res.json(result.recordset);
+
+      if(user.password === password){
+        status = 200;
+      }else{
+        status = 404;
+      }
+
       res.json(result.recordset);
+      res.status(status);
     })
     .catch(err => {
       console.error('Error:', err);

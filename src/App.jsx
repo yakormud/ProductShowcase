@@ -3,6 +3,9 @@ import axios from 'axios';
 import './App.css'
 import Catalog from './Catalog';
 import Navbar from './Navbar';
+import createStore from 'react-auth-kit/createStore';
+import AuthProvider from 'react-auth-kit';
+
 
 function App() {
   const [persons, setPersons] = useState([]);
@@ -17,10 +20,20 @@ function App() {
 
   }, []);
 
+  
+const store = createStore({
+  authName:'_auth',
+  authType:'cookie',
+  cookieDomain: window.location.hostname,
+  cookieSecure: window.location.protocol === 'https:',
+});
+
   return (
     <>
+    <AuthProvider store={store}>
       <Navbar />
       <Catalog />
+    </AuthProvider>
     </>
   );
 }
