@@ -31,10 +31,15 @@ const Login = () => {
         e.preventDefault();
         axios.post('http://localhost:80/auth', form)
             .then((res, err) => {
-                // console.log(res.data);
-                if(err){
-                    console.log("error eiei");
-                }
+                signIn({
+                    auth: {
+                        token: res.data.token,
+                        type: 'Bearer'
+                    },
+                    authState: { username: form.username },
+                    expireIn: 3600,
+                });
+                console.log('After signIn:', document.cookie);
                 // if (res.status === 200) {
                 //     if (signIn({
                 //         auth: {
@@ -57,36 +62,41 @@ const Login = () => {
                 //         });
                 //     }
                 // }
-            }).catch( err => {
+            }).catch(err => {
                 console.log("catch");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erroryaasdsd!',
+                    text: err,
+                });
             })
 
-        try {
-            const res = await axios.post(`http://localhost:80/auth`, form)
-            console.log(res.data);
-            signIn({
-                auth: {
-                    token: 'res.data.token',
-                    type: 'Bearer'
-                },
-                authState: { username: form.username },
-                expireIn: 3600,
-            });
+        // try {
+        //     const res = await axios.post(`http://localhost:80/auth`, form)
+        //     console.log(res.data);
+        //     signIn({
+        //         auth: {
+        //             token: 'res.data.token',
+        //             type: 'Bearer'
+        //         },
+        //         authState: { username: form.username },
+        //         expireIn: 3600,
+        //     });
 
-            Swal.fire({
-                icon: 'done',
-                title: 'done!',
-                text: 'done!',
-            });
-        }
-        catch (err) {
-            console.log(err); ''
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: err,
-            });
-        }
+        //     Swal.fire({
+        //         icon: 'done',
+        //         title: 'done!',
+        //         text: 'done!',
+        //     });
+        // }
+        // catch (err) {
+        //     console.log(err); ''
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Error!',
+        //         text: err,
+        //     });
+        // }
     };
 
 
