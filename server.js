@@ -62,14 +62,13 @@ app.post('/auth',(req,res) =>{
     .then(result => {
       if (result.recordset.length > 0) {
         var queryUser = result.recordset[0];
-        console.log(process.env.foo);
         if(user.password === queryUser.UserPassword){
           const jwtToken = jwt.sign(
             { id: queryUser.UserID, 
               username: queryUser.UserName,
               firstname: queryUser.FirstName,
               lastname: queryUser.LastName,
-            },process.env.foo);
+            },"mySecretKey");
           res.json({message: 'Authenticated', token: jwtToken});
         }else{
           res.status(404).json({ error: 'Login Error!' });

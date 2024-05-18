@@ -12,47 +12,73 @@ const Login = () => {
     const signIn = useSignIn();
     const [user, setUsers] = useState([]);
     const auth = useAuthUser();
-    
-    
+
+
     const [form, setForm] = useState({
         username: "",
         password: "",
-      });
-    
-      const onUpdateField = e => {
+    });
+
+    const onUpdateField = e => {
         const nextFormState = {
-          ...form,
-          [e.target.name]: e.target.value,
+            ...form,
+            [e.target.name]: e.target.value,
         };
         setForm(nextFormState);
-      };
-      
-      const onSubmitForm = async (e) => {
-        e.preventDefault();
-        try{ 
-            const res = await axios.post(`http://localhost:80/auth`, form)
-            console.log(res.data);
-            signIn({
-                token: res.data.token,
-                expiresIn: 3600,
-                tokenType: 'Bearer',
-                authState: { username : form.username}
-            });
+    };
 
-            Swal.fire({
-                icon: 'done',
-                title: 'done!',
-                text: 'done!',
-            });
-        } 
-        catch(err){
-            console.log(err);''
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: err,
-            });
-        }
+    const onSubmitForm = async (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:80/auth', form)
+            .then((res) => {
+                if (res.status === 200) {
+                    if (signIn({
+                        auth: {
+                            token: 'res.data.token',
+                            type: 'Bearer'
+                        },
+                        authState: {username: form.username},
+                        expireIn: 3600,
+                    })) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'done!',
+                            text: 'done!',
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: err,
+                        });
+                    }
+                }
+            })
+
+        // try{ 
+        //     const res = await axios.post(`http://localhost:80/auth`, form)
+        //     console.log(res.data);
+        //     signIn({
+        //         token: res.data.token,
+        //         expiresIn: 3600,
+        //         tokenType: 'Bearer',
+        //         authState: { username : form.username}
+        //     });
+
+        //     Swal.fire({
+        //         icon: 'done',
+        //         title: 'done!',
+        //         text: 'done!',
+        //     });
+        // } 
+        // catch(err){
+        //     console.log(err);''
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Error!',
+        //         text: err,
+        //     });
+        // }
     };
 
 
@@ -79,7 +105,7 @@ const Login = () => {
                 onChange={onUpdateField}
             />
         </div>
-       
+
         <div className="mb-3">
             <button className="btn btn-primary" type="submit">
                 Login
