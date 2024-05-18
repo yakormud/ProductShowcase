@@ -28,26 +28,26 @@ function Catalog() {
 
 
 
-  useEffect(() => {
-    const hasSeenPopup = sessionStorage.getItem('hasSeenPopup');
-    if (!hasSeenPopup) {
-      // Display SweetAlert if the user hasn't seen it before
-      Swal.fire({
-        title: 'addProduct page has been successfully made, XD',
-        text: 'you can access it by editing url to path /addProduct, cuz I\'m too lazy to make a button',
-        icon: 'info',
-        showCancelButton: true,
-        confirmButtonText: 'Let me try!',
-        cancelButtonText: 'No, stay this page',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // If the user clicks "Yes, go to addProduct", navigate to the addProduct page
-          navigate('/addProduct');
-          sessionStorage.setItem('hasSeenPopup', true);
-        }
-      });
-    }
-  }, [history]);
+  // useEffect(() => {
+  //   const hasSeenPopup = sessionStorage.getItem('hasSeenPopup');
+  //   if (!hasSeenPopup) {
+  //     // Display SweetAlert if the user hasn't seen it before
+  //     Swal.fire({
+  //       title: 'addProduct page has been successfully made, XD',
+  //       text: 'you can access it by editing url to path /addProduct, cuz I\'m too lazy to make a button',
+  //       icon: 'info',
+  //       showCancelButton: true,
+  //       confirmButtonText: 'Let me try!',
+  //       cancelButtonText: 'No, stay this page',
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         // If the user clicks "Yes, go to addProduct", navigate to the addProduct page
+  //         navigate('/addProduct');
+  //         sessionStorage.setItem('hasSeenPopup', true);
+  //       }
+  //     });
+  //   }
+  // }, [history]);
 
 
   useEffect(() => {
