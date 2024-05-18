@@ -29,56 +29,58 @@ const Login = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:80/auth', form)
-            .then((res) => {
-                if (res.status === 200) {
-                    if (signIn({
-                        auth: {
-                            token: 'res.data.token',
-                            type: 'Bearer'
-                        },
-                        authState: {username: form.username},
-                        expireIn: 3600,
-                    })) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'done!',
-                            text: 'done!',
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: err,
-                        });
-                    }
-                }
-            })
+        // axios.post('http://localhost:80/auth', form)
+        //     .then((res) => {
+        //         if (res.status === 200) {
+        //             if (signIn({
+        //                 auth: {
+        //                     token: 'res.data.token',
+        //                     type: 'Bearer'
+        //                 },
+        //                 authState: {username: form.username},
+        //                 expireIn: 3600,
+        //             })) {
+        //                 Swal.fire({
+        //                     icon: 'success',
+        //                     title: 'done!',
+        //                     text: 'done!',
+        //                 });
+        //             } else {
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: 'Error!',
+        //                     text: err,
+        //                 });
+        //             }
+        //         }
+        //     })
 
-        // try{ 
-        //     const res = await axios.post(`http://localhost:80/auth`, form)
-        //     console.log(res.data);
-        //     signIn({
-        //         token: res.data.token,
-        //         expiresIn: 3600,
-        //         tokenType: 'Bearer',
-        //         authState: { username : form.username}
-        //     });
+        try {
+            const res = await axios.post(`http://localhost:80/auth`, form)
+            console.log(res.data);
+            signIn({
+                auth: {
+                    token: 'res.data.token',
+                    type: 'Bearer'
+                },
+                authState: { username: form.username },
+                expireIn: 3600,
+            });
 
-        //     Swal.fire({
-        //         icon: 'done',
-        //         title: 'done!',
-        //         text: 'done!',
-        //     });
-        // } 
-        // catch(err){
-        //     console.log(err);''
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: 'Error!',
-        //         text: err,
-        //     });
-        // }
+            Swal.fire({
+                icon: 'done',
+                title: 'done!',
+                text: 'done!',
+            });
+        }
+        catch (err) {
+            console.log(err); ''
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: err,
+            });
+        }
     };
 
 
