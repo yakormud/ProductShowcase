@@ -29,7 +29,7 @@ const Login = () => {
       
       const onSubmitForm = e => {
         e.preventDefault();
-        axios.post(`http://localhost:80/login`, form).then((res) => {
+        axios.post(`http://localhost:80/auth`, form).then((res) => {
             if(res.status == 200){
                 if(signIn({
                     auth: {

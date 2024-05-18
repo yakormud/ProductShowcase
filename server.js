@@ -57,10 +57,23 @@ app.post('/auth',(req,res) =>{
   
   sql.connect(config)
     .then(pool => {
-      return pool.request().input('UserName', sql.NVarChar, username).query('SELECT * FROM user WHERE userName=@UserName');
+      return pool.request()
+      .input('UserName', sql.NVarChar, username)
+      .input('Password',sql.NVarChar,password)
+      .query('SELECT * FROM user WHERE userName=@UserName');
     })
     .then(result => {
+      var status;
+      var user = res.json(result.recordset);
+
+      if(user.password === password){
+        status = 200;
+      }else{
+        status = 404;
+      }
+
       res.json(result.recordset);
+      res.status(status);
     })
     .catch(err => {
       console.error('Error:', err);
