@@ -9,6 +9,7 @@ import axios from 'axios';
 function Product() {
     const [product, setProduct] = useState({});
 
+
     useEffect(() => {
         axios.get('http://localhost:80/product/17')
             .then((res) => {
@@ -22,6 +23,7 @@ function Product() {
     return (
         <>
         <Navbar />
+        <h3>{productId}</h3>
         <h3>{product.ProductName}</h3>
         </>
     );

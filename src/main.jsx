@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <BrowserRouter>
         <Routes>
             <Route path="/" exact element={<App/>} />
-            <Route path="/product/:id" element={<Product/>} />
+            <Route path="/product" element={<Product/>} />
             <Route path="/addProduct" element={
                 <RequireAuth fallbackPath={'/'}>
                     <AddProduct/>
