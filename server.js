@@ -24,8 +24,6 @@ const config = {
   trustServerCertificate: false,
 };
 
-
-
 async function testConnection() {
   try {
     await sql.connect(config);
@@ -53,32 +51,28 @@ testConnection();
 //get auth
 app.post('/auth',(req,res) =>{
   
-  const {username , password} = req.body;
-  
+  const user = req.body;
   sql.connect(config)
     .then(pool => {
       return pool.request()
-      .input('UserName', sql.NVarChar, username)
-      .input('Password',sql.NVarChar,password)
-      .query('SELECT * FROM user WHERE userName=@UserName');
+      .input('userName', sql.NVarChar, user.username)
+      .query('SELECT * FROM "user" WHERE UserName = @userName');
     })
     .then(result => {
-      var status;
-      var user = res.json(result.recordset);
-
-      if(user.password === password){
-        status = 200;
-      }else{
-        status = 404;
+      if (result.recordset.length > 0) {
+        var queryUser = result.recordset[0];
+        if(user.password === queryUser.UserPassword){
+          res.json(result.recordset[0]);
+        }else{
+          res.status(404).json({ error: 'Login Error!' });
+        }
+      } else {
+        res.status(404).json({ error: 'Login Error!' });
       }
-
-      res.json(result.recordset);
-      res.status(status);
     })
     .catch(err => {
       console.error('Error:', err);
       res.status(500).json({ error: 'Internal Server Error' });
-      console.log(req.body);
     });
 })
 

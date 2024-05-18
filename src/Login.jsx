@@ -6,7 +6,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
-
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const signIn = useSignIn();
@@ -15,7 +15,7 @@ const Login = () => {
     
     
     const [form, setForm] = useState({
-        email: "",
+        username: "",
         password: "",
       });
     
@@ -29,8 +29,10 @@ const Login = () => {
       
       const onSubmitForm = e => {
         e.preventDefault();
+        
         axios.post(`http://localhost:80/auth`, form).then((res) => {
-            if(res.status == 200){
+            
+            if(res.status === 200){
                 if(signIn({
                     auth: {
                         token: res.data.token,
@@ -39,38 +41,29 @@ const Login = () => {
                     refresh: res.data.refreshToken,
                     userState: res.data.authUserState
                 })){ 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Yes!',
-                        text: 'Yes!',
-                        showCancelButton: true,
-                        confirmButtonText: 'Try Again',
-                        cancelButtonText: 'Close',
-                    });
-                }else {
-                    Swal.fire({
-                        icon: 'fail',
-                        title: 'Failed!',
-                        text: 'Invalid Login!',
-                        showCancelButton: true,
-                        confirmButtonText: 'Try Again',
-                        cancelButtonText: 'Close',
-                    });
+                    console.log(res.data);
                 }
             }
-            })
+            }).catch(err => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Failed to add product. Please try again later.',
+                    showCloseButton: true,
+                });
+            });
     };
 
 
     return (<form onSubmit={onSubmitForm}>
         <div className="mb-3">
-            <label className="form-label">Email</label>
+            <label className="form-label">Username</label>
             <input
                 className="form-control"
                 type="text"
                 aria-label="Email field"
-                name="email"
-                value={form.email}
+                name="username"
+                value={form.username}
                 onChange={onUpdateField}
             />
         </div>

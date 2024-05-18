@@ -24,7 +24,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Routes>
             <Route path="/" exact element={<App/>} />
             <Route path="/product/:id" element={<Product/>} />
-            <Route path="/addProduct" element={<AddProduct/>} />
+            <Route path="/addProduct" element={
+                <RequireAuth fallbackPath={'/login'}>
+                    <AddProduct/>
+                </RequireAuth>} />
             <Route path="/login" element={<Login/>} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
