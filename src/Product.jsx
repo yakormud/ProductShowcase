@@ -1,22 +1,27 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import logo from './assets/mylogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState, useEffect } from 'react'
+import axios from 'axios';
+
 
 function Product() {
-    const [test, setTest] = useState([]);
+    const [product, setProduct] = useState({});
 
-  useEffect(() => {
-    axios.get(`http://localhost:80/product`, {
-    }).then((res) => res.data).then(data => {
-      setTest(data);
-    }).catch((error) => {
-      console.log(error);
-    });
+    useEffect(() => {
+        axios.get('http://localhost:80/product/17')
+            .then((res) => {
+                setProduct(res.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching product:', error);
+            });
+    }, []);
 
-  }, []);
     return (
-        <h3>{test.productID}</h3>
-    )
+        <h3>{product.ProductName}</h3>
+    );
 }
+
 
 export default Product
