@@ -69,8 +69,8 @@ app.post('/auth',(req,res) =>{
               firstname: queryUser.FirstName,
               lastname: queryUser.LastName,
             },"mySecretKey");
-            res.header(jwtToken);
-        }else{
+          res.json({message: 'Authenticated', token: jwtToken});
+        }else{ //error password not match
           res.status(404).json({ error: 'Login Error!' });
         }
       } else {

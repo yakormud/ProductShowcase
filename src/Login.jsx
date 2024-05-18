@@ -29,31 +29,37 @@ const Login = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-        // axios.post('http://localhost:80/auth', form)
-        //     .then((res) => {
-        //         if (res.status === 200) {
-        //             if (signIn({
-        //                 auth: {
-        //                     token: 'res.data.token',
-        //                     type: 'Bearer'
-        //                 },
-        //                 authState: {username: form.username},
-        //                 expireIn: 3600,
-        //             })) {
-        //                 Swal.fire({
-        //                     icon: 'success',
-        //                     title: 'done!',
-        //                     text: 'done!',
-        //                 });
-        //             } else {
-        //                 Swal.fire({
-        //                     icon: 'error',
-        //                     title: 'Error!',
-        //                     text: err,
-        //                 });
-        //             }
-        //         }
-        //     })
+        axios.post('http://localhost:80/auth', form)
+            .then((res, err) => {
+                // console.log(res.data);
+                if(err){
+                    console.log("error eiei");
+                }
+                // if (res.status === 200) {
+                //     if (signIn({
+                //         auth: {
+                //             token: 'res.data.token',
+                //             type: 'Bearer'
+                //         },
+                //         authState: {username: form.username},
+                //         expireIn: 3600,
+                //     })) {
+                //         Swal.fire({
+                //             icon: 'success',
+                //             title: 'done!',
+                //             text: 'done!',
+                //         });
+                //     } else {
+                //         Swal.fire({
+                //             icon: 'error',
+                //             title: 'Error!',
+                //             text: err,
+                //         });
+                //     }
+                // }
+            }).catch( err => {
+                console.log("catch");
+            })
 
         try {
             const res = await axios.post(`http://localhost:80/auth`, form)
