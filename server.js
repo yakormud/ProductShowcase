@@ -7,6 +7,7 @@ import sql from "mssql";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import jwt from 'jsonwebtoken';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -23,8 +24,6 @@ const config = {
   encrypt: false,
   trustServerCertificate: false,
 };
-
-
 
 async function testConnection() {
   try {
@@ -53,32 +52,35 @@ testConnection();
 //get auth
 app.post('/auth',(req,res) =>{
   
-  const {username , password} = req.body;
-  
+  const user = req.body;
   sql.connect(config)
     .then(pool => {
       return pool.request()
-      .input('UserName', sql.NVarChar, username)
-      .input('Password',sql.NVarChar,password)
-      .query('SELECT * FROM user WHERE userName=@UserName');
+      .input('userName', sql.NVarChar, user.username)
+      .query('SELECT * FROM "user" WHERE UserName = @userName');
     })
     .then(result => {
-      var status;
-      var user = res.json(result.recordset);
-
-      if(user.password === password){
-        status = 200;
-      }else{
-        status = 404;
+      if (result.recordset.length > 0) {
+        var queryUser = result.recordset[0];
+        console.log(process.env.foo);
+        if(user.password === queryUser.UserPassword){
+          const jwtToken = jwt.sign(
+            { id: queryUser.UserID, 
+              username: queryUser.UserName,
+              firstname: queryUser.FirstName,
+              lastname: queryUser.LastName,
+            },process.env.foo);
+          res.json({message: 'Authenticated', token: jwtToken});
+        }else{
+          res.status(404).json({ error: 'Login Error!' });
+        }
+      } else {
+        res.status(404).json({ error: 'Login Error!' });
       }
-
-      res.json(result.recordset);
-      res.status(status);
     })
     .catch(err => {
       console.error('Error:', err);
       res.status(500).json({ error: 'Internal Server Error' });
-      console.log(req.body);
     });
 })
 
@@ -111,6 +113,7 @@ app.get('/product/:id', (req, res) => {
     })
     .then(result => {
       if (result.recordset.length > 0) {
+        const jwtToken = jwt
         res.json(result.recordset[0]); 
       } else {
         res.status(404).json({ error: 'Product not found' });
