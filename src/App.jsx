@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import createStore from 'react-auth-kit/createStore';
 import AuthProvider from 'react-auth-kit';
 
+
 function App() {
   const [persons, setPersons] = useState([]);
 
@@ -29,11 +30,10 @@ const store = createStore({
 
   return (
     <>
+    <AuthProvider store={store}>
       <Navbar />
       <Catalog />
-      <AuthProvider store={store}>
-        <RoutesComponent/>
-      </AuthProvider>
+    </AuthProvider>
     </>
   );
 }
