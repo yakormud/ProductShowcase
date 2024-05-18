@@ -7,6 +7,7 @@ import sql from "mssql";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import jwt from 'jsonwebtoken';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -61,8 +62,15 @@ app.post('/auth',(req,res) =>{
     .then(result => {
       if (result.recordset.length > 0) {
         var queryUser = result.recordset[0];
+        console.log(process.env.foo);
         if(user.password === queryUser.UserPassword){
-          res.json(result.recordset[0]);
+          const jwtToken = jwt.sign(
+            { id: queryUser.UserID, 
+              username: queryUser.UserName,
+              firstname: queryUser.FirstName,
+              lastname: queryUser.LastName,
+            },process.env.foo);
+          res.json({message: 'Authenticated', token: jwtToken});
         }else{
           res.status(404).json({ error: 'Login Error!' });
         }
@@ -105,6 +113,7 @@ app.get('/product/:id', (req, res) => {
     })
     .then(result => {
       if (result.recordset.length > 0) {
+        const jwtToken = jwt
         res.json(result.recordset[0]); 
       } else {
         res.status(404).json({ error: 'Product not found' });

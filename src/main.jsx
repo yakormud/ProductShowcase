@@ -7,7 +7,7 @@ import AddProduct from './AddProduct.jsx';
 import Login from './Login.jsx';
 import './index.css';
 import AuthProvider from 'react-auth-kit';
-
+import { RequireAuth } from "react-auth-kit";
 import createStore from 'react-auth-kit/createStore'; 
 
 const store = createStore({
@@ -25,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/" exact element={<App/>} />
             <Route path="/product/:id" element={<Product/>} />
             <Route path="/addProduct" element={
-                <RequireAuth fallbackPath={'/login'}>
+                <RequireAuth fallbackPath={'/'}>
                     <AddProduct/>
                 </RequireAuth>} />
             <Route path="/login" element={<Login/>} />

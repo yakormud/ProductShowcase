@@ -7,11 +7,11 @@ import { useState, useEffect } from 'react'
 import axios from 'axios';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import Swal from 'sweetalert2';
-
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 const Login = () => {
     const signIn = useSignIn();
     const [user, setUsers] = useState([]);
-
+    const auth = useAuthUser();
     
     
     const [form, setForm] = useState({
@@ -27,31 +27,32 @@ const Login = () => {
         setForm(nextFormState);
       };
       
-      const onSubmitForm = e => {
+      const onSubmitForm = async (e) => {
         e.preventDefault();
-        
-        axios.post(`http://localhost:80/auth`, form).then((res) => {
-            
-            if(res.status === 200){
-                if(signIn({
-                    auth: {
-                        token: res.data.token,
-                        type: 'Bearer'
-                    },
-                    refresh: res.data.refreshToken,
-                    userState: res.data.authUserState
-                })){ 
-                    console.log(res.data);
-                }
-            }
-            }).catch(err => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'Failed to add product. Please try again later.',
-                    showCloseButton: true,
-                });
+        try{ 
+            const res = await axios.post(`http://localhost:80/auth`, form)
+            console.log(res.data);
+            signIn({
+                token: res.data.token,
+                expiresIn: 3600,
+                tokenType: 'Bearer',
+                authState: { username : form.username}
             });
+
+            Swal.fire({
+                icon: 'done',
+                title: 'done!',
+                text: 'done!',
+            });
+        } 
+        catch(err){
+            console.log(err);''
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: err,
+            });
+        }
     };
 
 
