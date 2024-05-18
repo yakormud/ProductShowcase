@@ -150,7 +150,7 @@ function Catalog() {
             <>
               {filteredProducts.length > 0 ? (
                 filteredProducts.map(product => (
-                  <div className="card" key={product.ProductID}>
+                  <div className="card" key={product.ProductID} onClick={() => navigate(`/product/${product.ProductID}`)}>
                     <img
                       src={productImages[product.ProductID] || adidaspic}
                       alt={product.ProductName}
