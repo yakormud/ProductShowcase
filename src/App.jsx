@@ -4,7 +4,7 @@ import './App.css'
 import Catalog from './Catalog';
 import Navbar from './Navbar';
 import createStore from 'react-auth-kit/createStore';
-import AuthProvider from 'react-auth-kit';
+
 
 
 function App() {
@@ -30,10 +30,8 @@ const store = createStore({
 
   return (
     <>
-    <AuthProvider store={store}>
-      <Navbar />
-      <Catalog />
-    </AuthProvider>
+    <Navbar />
+    <Catalog />
     </>
   );
 }

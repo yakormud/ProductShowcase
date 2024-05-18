@@ -52,7 +52,7 @@ testConnection();
 
 //get auth
 app.post('/auth',(req,res) =>{
-
+  
   const {username , password} = req.body;
   
   sql.connect(config)
@@ -78,9 +78,8 @@ app.post('/auth',(req,res) =>{
     .catch(err => {
       console.error('Error:', err);
       res.status(500).json({ error: 'Internal Server Error' });
+      console.log(req.body);
     });
-
-
 })
 
 
