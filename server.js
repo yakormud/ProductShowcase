@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { config } from './sqlconfig.cjs';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import fs from 'fs';
