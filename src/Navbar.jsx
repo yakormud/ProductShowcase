@@ -7,7 +7,7 @@ import Login from './Login.jsx'
 function Navbar() {
 
     return (
-        <div className="navbar">
+        <div className="mynavbar">
             <div className="flex logo">
                 <img src={logo} alt="" />
                 <p>Product showcase</p>

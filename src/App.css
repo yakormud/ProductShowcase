@@ -41,7 +41,9 @@ body {
   }
 
 /* NAVBAR */
-.navbar {
+.mynavbar {
+  --bs-navbar-padding-x: 0 !important;
+  --bs-navbar-padding-y: 0 !important;
     gap: 50%;
     height: 90px;
     display: flex;
@@ -49,11 +51,11 @@ body {
     color: rgb(70, 70, 70);
 }
 
-.navbar-menu {
+.mynavbar-menu {
     gap: 20px;
 }
 
-.navbar-menu a:hover {
+.mynavbar-menu a:hover {
     cursor: pointer;
 }
 
@@ -248,6 +250,10 @@ body {
 .card img {
     width: 150px;
     height: 150px;
+}
+
+*, ::after, ::before {
+  box-sizing:unset !important;
 }
 
 .card-details h3{
