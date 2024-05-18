@@ -24,7 +24,6 @@ const Login = () => {
     const [form, setForm] = useState({
         email: "",
         password: "",
-        confirmPassword: "",
       });
     
       const onUpdateField = e => {
@@ -37,8 +36,7 @@ const Login = () => {
       
       const onSubmitForm = e => {
         e.preventDefault();
-        alert(JSON.stringify(form, null, 2));
-        alert(user);
+        
       };
 
 

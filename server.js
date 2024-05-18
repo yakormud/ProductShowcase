@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
- import { config } from './sqlconfig.cjs';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import fs from 'fs';
@@ -8,7 +7,6 @@ import sql from "mssql";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import createStore from 'react-auth-kit/createStore';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -17,13 +15,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+const config = {
+  server: 'productdb.czw620y8qg76.us-east-1.rds.amazonaws.com',
+  database: 'Product',
+  user: 'adminlogin',
+  password: '123456789',
+  encrypt: false,
+  trustServerCertificate: false,
+};
 
-const store = createStore({
-  authName:'_auth',
-  authType:'cookie',
-  cookieDomain: window.location.hostname,
-  cookieSecure: window.location.protocol === 'https:',
-});
 
 
 async function testConnection() {
