@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 
 const AddProduct = () => {
     const navigate = useNavigate();
+    
     const goBack = () => {
         navigate('/'); // Navigate back to the "/" page
       };

@@ -123,19 +123,32 @@ body {
     text-align: center;
     margin: auto;
 }
+
+.simplebutton{
+  background-color: #429dff;
+  color: white;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 80%;
+}
+
+.simplebutton :hover{
+  cursor: pointer;
+}
 .sort-bar label {
   text-align: center;
 }
 
 .sort-bar select{
-  width: 90%;
-  padding: 10px;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-top: 5px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-  margin-left: 10px;
 }
 
 
@@ -161,7 +174,7 @@ body {
 
 .page-header span{
     font-weight: 400;
-    font-size: 140%;
+    font-size: 200%;
     color: grey;
 }
 
@@ -239,6 +252,7 @@ body {
     background-color: white;
     padding: 1vw;
     border-radius: 5px;
+    --bs-card-border-width: unset !important;
 }
 
 .card:hover {
@@ -305,6 +319,7 @@ body {
   
   .add-product-form label {
     margin-bottom: 10px;
+    display: unset !important;
   }
   
   .add-product-form input,
@@ -362,6 +377,22 @@ body {
     cursor: pointer;
   }
 
+
   .img-container {
     position: relative;
   }
+
+/* MODAL LOGIN */
+
+.modal-body form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body form input {
+  box-sizing: border-box !important;
+}
+
+.modal-body form button {
+  width: 30%;
+}

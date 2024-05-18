@@ -4,8 +4,9 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import adidaspic from './assets/adidas.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass,faUser } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 
 function Catalog() {
   const [products, setProducts] = useState([]);
@@ -15,6 +16,7 @@ function Catalog() {
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
+  const isAuthenticated = useIsAuthenticated()
 
   const [formData, setFormData] = useState({
     productCategory: '',
@@ -129,6 +131,9 @@ function Catalog() {
             ))}
           </select>
         </label>
+        { isAuthenticated ? (<div className="simplebutton">
+          <p>Add a product</p>
+        </div>) : ("")}
       </div>
       <div className='content-bar'>
         <div className='content-header'>
