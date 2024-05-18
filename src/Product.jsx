@@ -2,6 +2,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import logo from './assets/mylogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState, useEffect } from 'react'
+import Navbar from './Navbar';
 import axios from 'axios';
 
 
@@ -19,7 +20,10 @@ function Product() {
     }, []);
 
     return (
+        <>
+        <Navbar />
         <h3>{product.ProductName}</h3>
+        </>
     );
 }
 
