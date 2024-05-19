@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import adidaspic from './assets/adidas.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass,faUser } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+import AuthContext from './AuthContext';
 
 function Catalog() {
   const [products, setProducts] = useState([]);
@@ -16,7 +16,7 @@ function Catalog() {
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-  const isAuthenticated = useIsAuthenticated()
+  const { auth } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     productCategory: '',
@@ -131,9 +131,9 @@ function Catalog() {
             ))}
           </select>
         </label>
-        { isAuthenticated ? (<div className="simplebutton">
-          <p>Add a product</p>
-        </div>) : ("")}
+        { auth && (<div className="simplebutton">
+                    <p>Add a product</p>
+                </div>) }
       </div>
       <div className='content-bar'>
         <div className='content-header'>

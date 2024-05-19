@@ -10,28 +10,15 @@ import AuthProvider from 'react-auth-kit';
 import { RequireAuth } from "react-auth-kit";
 import createStore from 'react-auth-kit/createStore'; 
 
-const store = createStore({
-    authName:'_auth',
-    authType:'cookie',
-    cookieDomain: window.location.hostname,
-    cookieSecure: false,
-  });
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <AuthProvider store={store}>
         <BrowserRouter>
         <Routes>
             <Route path="/" exact element={<App/>} />
             <Route path="/product/:id" element={<Product/>} />
-            <Route path="/addProduct" element={
-                <RequireAuth fallbackPath={'/'}>
-                    <AddProduct/>
-                </RequireAuth>} />
+            <Route path="/addProduct" element={<AddProduct/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         </BrowserRouter>
-    </AuthProvider>
-    
 );

@@ -3,16 +3,13 @@ import logo from './assets/mylogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { useState, useEffect } from 'react'
+import { useState, useEffect,useContext } from 'react'
 import axios from 'axios';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import Swal from 'sweetalert2';
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import AuthContext from './AuthContext';
 const Login = () => {
-    const signIn = useSignIn();
-    const [user, setUsers] = useState([]);
-    const auth = useAuthUser();
-
+    const { setAuth } = useContext(AuthContext);
 
     const [form, setForm] = useState({
         username: "",
@@ -29,55 +26,31 @@ const Login = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:80/auth', form)
-            .then((res, err) => {
-                // console.log(res.data);
-                if(err){
-                    console.log("error eiei");
-                }
-                // if (res.status === 200) {
-                //     if (signIn({
-                //         auth: {
-                //             token: 'res.data.token',
-                //             type: 'Bearer'
-                //         },
-                //         authState: {username: form.username},
-                //         expireIn: 3600,
-                //     })) {
-                //         Swal.fire({
-                //             icon: 'success',
-                //             title: 'done!',
-                //             text: 'done!',
-                //         });
-                //     } else {
-                //         Swal.fire({
-                //             icon: 'error',
-                //             title: 'Error!',
-                //             text: err,
-                //         });
-                //     }
-                // }
-            }).catch( err => {
-                console.log("catch");
-            })
-
         try {
             const res = await axios.post(`http://localhost:80/auth`, form)
             console.log(res.data);
-            signIn({
-                auth: {
-                    token: 'res.data.token',
-                    type: 'Bearer'
-                },
-                authState: { username: form.username },
-                expireIn: 3600,
-            });
+
+            if (res.data.token) {
+                axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+                setAuth(true); // Update the auth state
+                Swal.fire({ icon: 'success', title: 'done!', text: 'done!' });
+            } else {
+                delete axios.defaults.headers.common["Authorization"];
+                setAuth(false); // Update the auth state
+                Swal.fire({ icon: 'error', title: 'Error!', text: 'Invalid credentials' });
+            }
 
             Swal.fire({
-                icon: 'done',
+                icon: 'success',
                 title: 'done!',
                 text: 'done!',
+            }).then(function() {
+                window.location = "/";
             });
+            
+            console.log("Headers before request:", axios.defaults.headers);
+
+
         }
         catch (err) {
             console.log(err); ''
