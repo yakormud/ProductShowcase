@@ -8,6 +8,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import AuthContext from './AuthContext';
 const Login = () => {
+    
     const { setAuth } = useContext(AuthContext);
 
     const [form, setForm] = useState({
@@ -25,6 +26,11 @@ const Login = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
+            Swal.fire({
+                icon: 'question',
+                text: 'Loading...',
+                showConfirmButton: false,
+            });
         try {
             const res = await axios.post(`http://localhost:80/auth`, form)
             console.log(res.data);
@@ -41,10 +47,9 @@ const Login = () => {
 
             Swal.fire({
                 icon: 'success',
-                title: 'done!',
-                text: 'done!',
-            })
-            
+                title: 'Done!',
+                text: 'Done!',
+            });
             console.log("Headers before request:", axios.defaults.headers);
 
 
@@ -54,7 +59,8 @@ const Login = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
-                text: err,
+                text: 'Invalid credentials',
+                
             });
         }
     };
@@ -85,7 +91,7 @@ const Login = () => {
         </div>
 
         <div className="mb-3">
-            <button className="btn btn-primary" type="submit">
+            <button className="btn btn-primary" type="submit" data-bs-dismiss="modal" >
                 Login
             </button>
         </div>
