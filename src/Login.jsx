@@ -3,9 +3,8 @@ import logo from './assets/mylogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { useState, useEffect,useContext } from 'react'
+import { useState,useContext } from 'react'
 import axios from 'axios';
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import Swal from 'sweetalert2';
 import AuthContext from './AuthContext';
 const Login = () => {
@@ -32,11 +31,11 @@ const Login = () => {
 
             if (res.data.token) {
                 axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
-                setAuth(true); // Update the auth state
+                setAuth(true);
                 Swal.fire({ icon: 'success', title: 'done!', text: 'done!' });
             } else {
                 delete axios.defaults.headers.common["Authorization"];
-                setAuth(false); // Update the auth state
+                setAuth(false); 
                 Swal.fire({ icon: 'error', title: 'Error!', text: 'Invalid credentials' });
             }
 
@@ -44,9 +43,7 @@ const Login = () => {
                 icon: 'success',
                 title: 'done!',
                 text: 'done!',
-            }).then(function() {
-                window.location = "/";
-            });
+            })
             
             console.log("Headers before request:", axios.defaults.headers);
 

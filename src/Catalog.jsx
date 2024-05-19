@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import adidaspic from './assets/adidas.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass,faUser } from '@fortawesome/free-solid-svg-icons';
-import Swal from 'sweetalert2';
 import AuthContext from './AuthContext';
 
 function Catalog() {
