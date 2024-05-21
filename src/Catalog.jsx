@@ -107,6 +107,9 @@ function Catalog() {
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
+  const checkAuth = e =>{
+    console.log(auth);
+  }
 
   return (
     <div className='catalog-container'>
@@ -130,7 +133,7 @@ function Catalog() {
             ))}
           </select>
         </label>
-        { auth && (<div className="simplebutton">
+        { auth && (<div className="simplebutton" onClick={checkAuth}>
                     <p>Add a product</p>
                 </div>) }
       </div>

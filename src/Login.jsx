@@ -8,10 +8,10 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import AuthContext from './AuthContext';
 import {getPayload} from './isAuth';
-import { jwtDecode } from "jwt-decode";
+
 const Login = () => {
     
-    const { setAuth } = useContext(AuthContext);
+    const {auth, setAuth } = useContext(AuthContext);
 
     const [form, setForm] = useState({
         username: "",
@@ -40,6 +40,7 @@ const Login = () => {
             if (res.data.token) {
                 axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
                 setAuth(true);
+                console.log(auth);
                 Swal.fire({ icon: 'success', title: 'done!', text: 'done!' });
             } else {
                 delete axios.defaults.headers.common["Authorization"];
@@ -52,7 +53,7 @@ const Login = () => {
                 title: 'Done!',
                 text: 'Done!',
             });
-            const authorization = axios.defaults.headers.common["Authorization"];
+            
             console.log("Headers before request:", axios.defaults.headers);
             console.log(getPayload());
             }
@@ -102,4 +103,4 @@ const Login = () => {
 
 }
 
-export default Login
+export default Login;

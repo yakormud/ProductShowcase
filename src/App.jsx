@@ -20,10 +20,10 @@ function App() {
 
   return (
     <>
-    <AuthProvider>
+
       <Navbar />
       <Catalog />
-    </AuthProvider>
+
     </>
   );
 }

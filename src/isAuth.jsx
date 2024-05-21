@@ -1,18 +1,22 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode"; // Ensure jwtDecode is correctly imported
 
 export const isAuth = () => {
     const authorization = axios.defaults.headers.common["Authorization"];
-    console.log("Headers before request:", axios.defaults.headers);
     if (!authorization) {
         return false;
-    }else{
+    }
+    try {
+        const token = authorization.replace("Bearer ", "");
+        jwtDecode(token); // This will throw an error if the token is invalid
         return true;
-    }   
+    } catch (e) {
+        return false;
+    }
 };
 
-export const getPayload= () => {
+export const getPayload = () => {
     const authorization = axios.defaults.headers.common["Authorization"];
     const token = authorization.replace("Bearer ", "");
     return jwtDecode(token);
-}  
+};
