@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 export const isAuth = () => {
     const authorization = axios.defaults.headers.common["Authorization"];
@@ -11,13 +12,7 @@ export const isAuth = () => {
 };
 
 export const getPayload= () => {
+    const authorization = axios.defaults.headers.common["Authorization"];
     const token = authorization.replace("Bearer ", "");
-    jwt.verify(token, JWT_SECRET, async (err, payload) => {
-        if (err) {
-         return false;
-        }else{
-            
-        }
-        return true;
-       });
+    return jwtDecode(token);
 }  

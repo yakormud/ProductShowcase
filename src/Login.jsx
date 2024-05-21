@@ -7,6 +7,8 @@ import { useState,useContext } from 'react'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import AuthContext from './AuthContext';
+import {getPayload} from './isAuth';
+import { jwtDecode } from "jwt-decode";
 const Login = () => {
     
     const { setAuth } = useContext(AuthContext);
@@ -50,10 +52,10 @@ const Login = () => {
                 title: 'Done!',
                 text: 'Done!',
             });
+            const authorization = axios.defaults.headers.common["Authorization"];
             console.log("Headers before request:", axios.defaults.headers);
-
-
-        }
+            console.log(getPayload());
+            }
         catch (err) {
             console.log(err); ''
             Swal.fire({
