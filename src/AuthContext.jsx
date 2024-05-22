@@ -8,14 +8,14 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(null);
 
-    // useEffect(() => {
-    //     const authorization = axios.defaults.headers.common["Authorization"];
-    //     if (authorization) {
-    //         setAuth(true);
-    //     }else{
-    //         setAuth(false);
-    //     }
-    // }, []);
+    useEffect(() => {
+        const authorization = axios.defaults.headers.common["Authorization"];
+        if (authorization) {
+            setAuth(true);
+        }else{
+            setAuth(false);
+        }
+    }, []);
 
     // useEffect(() => {
     //     const token = sessionStorage.getItem('token');      
@@ -27,21 +27,21 @@ export const AuthProvider = ({ children }) => {
     //         setAuth(false);
     //     }
     // }, []);
-    useEffect(() => {
-        const token = sessionStorage.getItem('token');
-        if (token) {
-            try {
-                const decodedToken = jwtDecode(token);
-                console.log(decodedToken);
-                setAuth(true);
-            } catch (error) {
-                sessionStorage.removeItem('token');
-                setAuth(false);
-            }
-        } else {
-            setAuth(false);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const token = sessionStorage.getItem('token');
+    //     if (token) {
+    //         try {
+    //             const decodedToken = jwtDecode(token);
+    //             console.log(decodedToken);
+    //             setAuth(true);
+    //         } catch (error) {
+    //             sessionStorage.removeItem('token');
+    //             setAuth(false);
+    //         }
+    //     } else {
+    //         setAuth(false);
+    //     }
+    // }, []);
 
     return (
         <AuthContext.Provider value={{ auth, setAuth}}>
