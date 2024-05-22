@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { isAuth } from './isAuth';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 
@@ -10,17 +11,34 @@ export const AuthProvider = ({ children }) => {
     // useEffect(() => {
     //     const authorization = axios.defaults.headers.common["Authorization"];
     //     if (authorization) {
-    //         setAuth(isAuth());
+    //         setAuth(true);
+    //     }else{
+    //         setAuth(false);
     //     }
     // }, []);
 
+    // useEffect(() => {
+    //     const token = sessionStorage.getItem('token');      
+    //     if (token) {
+    //         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    //         setAuth(true);
+    //         // console.log(isAuth());
+    //     }else{
+    //         setAuth(false);
+    //     }
+    // }, []);
     useEffect(() => {
-        const token = sessionStorage.getItem('token');      
+        const token = sessionStorage.getItem('token');
         if (token) {
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-            setAuth(true);
-            console.log(isAuth());
-        }else{
+            try {
+                const decodedToken = jwtDecode(token);
+                console.log(decodedToken);
+                setAuth(true);
+            } catch (error) {
+                sessionStorage.removeItem('token');
+                setAuth(false);
+            }
+        } else {
             setAuth(false);
         }
     }, []);
