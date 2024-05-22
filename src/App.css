@@ -10,6 +10,7 @@ h5 {
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
     font-weight: 400;
+    margin-bottom: unset !important;
 }
 
 body {
@@ -44,8 +45,8 @@ body {
 .mynavbar {
   --bs-navbar-padding-x: 0 !important;
   --bs-navbar-padding-y: 0 !important;
-    gap: 50%;
     height: 90px;
+    gap:10%;
     display: flex;
     justify-content: space-around;
     color: rgb(70, 70, 70);
@@ -141,7 +142,7 @@ body {
 }
 
 .sort-bar select{
-  width: 100%;
+  width: 90%;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-top: 5px;
@@ -170,11 +171,13 @@ body {
 
 .page-header h1{
     font-weight: 600;
+    align-self: center;
 }
 
 .page-header span{
     font-weight: 400;
-    font-size: 200%;
+    font-size: 250%;
+    align-self: flex-start;
     color: grey;
 }
 
@@ -395,4 +398,102 @@ body {
 
 .modal-body form button {
   width: 30%;
+}
+
+
+/* RESPONSIVE EIEI */
+@media only screen and (max-width: 775px) {
+  /* FOR MAIN PAGE & NAVBAR */
+  .catalog-container{
+    flex-direction: column-reverse;
+  }
+
+  .flex-center{
+    justify-content: center;
+  }
+  .search-wrap{
+    width: 40%;
+  }
+  .sort-bar {
+    align-self: center;
+    margin-top: 50px;
+    width: 40%;
+  }
+  .content-bar{
+    width: 100%;
+  }
+  .mynavbar{
+    flex-direction: column;
+  }
+
+  .highlight-btn {
+    height: 25px;
+  }
+  /* FOR ADDPRODUCT PAGE */
+  .add-product-container{
+    margin: unset;
+    h2{
+      text-align: center;
+    }
+    form{
+      flex-direction: column;
+    }
+  }
+  .add-product-img{
+    margin: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    label{
+      width: fit-content;
+      text-align: center;
+      margin: auto;
+    }
+    .img-container{
+      margin: auto;
+      width: fit-content;
+      overflow: hidden;
+    }
+    
+  }
+  .add-product-form input, .add-product-form select, .add-product-form textarea{
+    width: 100%;
+  }
+
+  .add-product-form button{
+    width: 95%;
+  }
+
+  
+}
+
+@media only screen and (max-width: 465px) {
+  /* FOR MAIN PAGE & NAVBAR */
+  .mynavbar{
+    height: fit-content;
+    justify-content: start;
+  }
+  .mynavbar-menu{
+    flex-direction: column;
+    p {
+      text-align: center;
+    }
+  }
+  .content-header{
+    flex-direction: column;
+    gap:0;
+    justify-content: start;
+    height: 130px;
+    .search-wrap{
+      width: 70%;
+    }
+  }
+    /* FOR ADDPRODUCT PAGE */
+  .add-product-form input, .add-product-form select, .add-product-form textarea{
+    width: 95%;
+  }
+  .add-product-form button{
+    width: 90%;
+  }
 }

@@ -71,14 +71,16 @@ app.post('/auth',(req,res) =>{
             },"mySecretKey");
           res.json({message: 'Authenticated', token: jwtToken});
         }else{
-          res.status(404).json({ error: 'Login Error!' });
+          // res.status(404).json({ error: 'Login Error!' });
+          res.json({message: 'invalid authenticated'});
         }
       } else {
-        res.status(404).json({ error: 'Login Error!' });
+        // res.status(404).json({ error: 'Login Error!' });
+        res.json({message: 'invalid authenticated'});
       }
     })
     .catch(err => {
-      console.error('Error:', err);
+      // console.error('Error:', err);
       res.status(500).json({ error: 'Internal Server Error' });
     });
 })

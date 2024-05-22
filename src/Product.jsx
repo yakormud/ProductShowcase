@@ -22,9 +22,9 @@ function Product() {
 
     return (
         <>
-        <Navbar />
-        <h3>{productId}</h3>
-        <h3>{product.ProductName}</h3>
+            <Navbar />
+            <h3>{product.ProductID}</h3>
+            <h3>{product.ProductName}</h3>
         </>
     );
 }

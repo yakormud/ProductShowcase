@@ -62,13 +62,13 @@ function Catalog() {
     }).then(res => res.data)
       .then(categoryData => {
         setCategories(categoryData);
-        console.log(categories);
+        // console.log(categories);
         const categoryHashMap = categoryData.reduce((map, category) => {
           map[category.CategoryID] = category.CategoryName;
           return map;
         }, {});
         setCategoryMap(categoryHashMap);
-        console.log(categoryHashMap);
+        // console.log(categoryHashMap);
       })
       .catch(error => console.error('Error fetching categories:', error));
 
@@ -93,7 +93,7 @@ function Catalog() {
           });
       }
     });
-    console.log('All images fetched:', productImages);
+    // console.log('All images fetched:', productImages);
   }, [products]);
 
   const filteredProducts = products.filter(product => {
@@ -133,13 +133,13 @@ function Catalog() {
             ))}
           </select>
         </label>
-        { auth && (<div className="simplebutton" onClick={checkAuth}>
+        { auth && (<div className="simplebutton" onClick={() => navigate("/addProduct")}>
                     <p>Add a product</p>
                 </div>) }
       </div>
       <div className='content-bar'>
         <div className='content-header'>
-          <div className='flex page-header' style={{ width: "50px" }}>
+          <div className='flex page-header'>
             <h1>PRODUCTS</h1>
             <span>({filteredProducts.length})</span>
           </div>

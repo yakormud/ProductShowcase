@@ -35,12 +35,13 @@ const Login = () => {
             });
         try {
             const res = await axios.post(`http://localhost:80/auth`, form)
-            console.log(res.data);
+            // console.log(res.data);
 
             if (res.data.token) {
+                sessionStorage.setItem('token', res.data.token);
                 axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
                 setAuth(true);
-                console.log(auth);
+                // console.log(auth);
                 Swal.fire({ icon: 'success', title: 'done!', text: 'done!' });
             } else {
                 delete axios.defaults.headers.common["Authorization"];
@@ -48,17 +49,17 @@ const Login = () => {
                 Swal.fire({ icon: 'error', title: 'Error!', text: 'Invalid credentials' });
             }
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Done!',
-                text: 'Done!',
-            });
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Done!',
+            //     text: 'Done!',
+            // });
             
-            console.log("Headers before request:", axios.defaults.headers);
-            console.log(getPayload());
+            // console.log("Headers before request:", axios.defaults.headers);
+            // console.log(getPayload());
             }
         catch (err) {
-            console.log(err); ''
+            // console.log(err); ''
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',

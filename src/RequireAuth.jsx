@@ -6,7 +6,7 @@ import AuthContext from './AuthContext';
 const RequireAuth = ({ element }) => {
   const { auth } = useContext(AuthContext);
     console.log(auth);
-  return auth ? element : <Navigate to="/addproduct" />;
+    return auth ? element : <Navigate to="/" />;
 };
 
 export default RequireAuth;
