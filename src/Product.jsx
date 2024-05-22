@@ -1,6 +1,8 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import logo from './assets/mylogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
@@ -9,6 +11,7 @@ import './App.css'; // นำเข้าไฟล์ CSS
 function Product() {
     const [product, setProduct] = useState({});
     const [category, setCategory] = useState({});
+    const navigate = useNavigate();
     const queryParameters = new URLSearchParams(window.location.search);
     const productId = queryParameters.get("id");
 
@@ -28,9 +31,17 @@ function Product() {
             });
     }, [productId]);
 
+    const goBack = () => {
+        navigate('/'); // Navigate back to the "/" page
+    };
+
     return (
         <>
             <Navbar />
+            <div className="back-arrow" onClick={goBack}>
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                        <span>Back</span>
+            </div>
             <div className="product-container">
                 <h1 className="product-name">{product.ProductName}</h1>
                 {product.PathToPhoto && <img src={product.PathToPhoto} alt={product.ProductName} className="product-image" />}
