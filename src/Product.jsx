@@ -53,7 +53,7 @@ function Product() {
                 status === false ? (<p className="loading">Loading...</p>) : (
                     <div>
                         <div className="back-arrow" onClick={goBack}>
-                            <FontAwesomeIcon icon={faArrowLeft} />
+                            <FontAwesomeIcon icon={faArrowLeft} className='left80'/>
                             <span>Back</span>
                         </div>
                         <div className="product-container">

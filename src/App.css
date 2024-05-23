@@ -501,6 +501,7 @@ body {
 /* FOR PRODUCT PAGE */
 .product-container {
   max-width: 800px;
+  width: 80%;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -508,7 +509,6 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: relative; /* Ensure the container is the reference point for the back arrow */
-  top: 45px;
 }
 
 .product-name {
@@ -549,12 +549,13 @@ body {
 .back-arrow {
   display: flex;
   align-items: center;
+  justify-content: start;
   cursor: pointer;
-  color: #666;
-  position: absolute;
-  top: 90px; /* Adjust this value based on your logo height */
-  left: 265px;
+  top: 90px;
+  margin-top: 10%;
   font-size: 1.2em;
+  margin-bottom: 0;
+  
 }
 
 .back-arrow:hover {
@@ -572,4 +573,8 @@ body {
   margin-top: 15%;
   font-size: 1.2em;
   color: #000000;
+}
+
+.left80{
+  margin-left: 8%;
 }
