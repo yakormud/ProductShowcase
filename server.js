@@ -8,6 +8,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import jwt from 'jsonwebtoken';
+
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -17,10 +22,10 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 const config = {
-  server: 'productdb.czw620y8qg76.us-east-1.rds.amazonaws.com',
-  database: 'Product',
-  user: 'adminlogin',
-  password: '123456789',
+  server: process.env.DB_SERVER,
+  database: process.env.DB_DATABASE,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   encrypt: false,
   trustServerCertificate: false,
 };
@@ -49,6 +54,11 @@ testConnection();
 //   }
 // }
 
+//get api path
+app.get('/api/config', (req, res) => {
+  res.json({ apiUrl: process.env.REACT_APP_API_URL });
+});
+
 //get auth
 app.post('/auth',(req,res) =>{
   
@@ -68,7 +78,7 @@ app.post('/auth',(req,res) =>{
               username: queryUser.UserName,
               firstname: queryUser.FirstName,
               lastname: queryUser.LastName,
-            },"mySecretKey", {expiresIn:'24h'});
+            },process.env.JWT_SECRET, {expiresIn:'24h'});
           res.json({message: 'Authenticated', token: jwtToken});
         }else{
           // res.status(404).json({ error: 'Login Error!' });
@@ -215,8 +225,8 @@ app.get('/image/:filename', (req, res) => {
 });
 
 // Start the server
-const PORT = 80;
-app.listen(PORT, () => {
+const PORT = 8080;
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port: ${PORT}`);
 });
 

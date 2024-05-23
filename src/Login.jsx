@@ -1,6 +1,4 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import logo from './assets/mylogo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import api from './api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { useState,useContext } from 'react'
@@ -34,14 +32,14 @@ const Login = () => {
                 showConfirmButton: false,
             });
         try {
-            const res = await axios.post(`http://localhost:80/auth`, form)
+            const res = await api.post(`/auth`, form)
             // console.log(res.data);
 
             if (res.data.token) {
                 sessionStorage.setItem('token', res.data.token);
                 axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
                 setAuth(true);
-                console.log(getPayload());
+                // console.log(getPayload());
                 Swal.fire({ icon: 'success', title: 'done!', text: 'done!' });
             } else {
                 delete axios.defaults.headers.common["Authorization"];

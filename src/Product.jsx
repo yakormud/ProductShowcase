@@ -1,12 +1,9 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import logo from './assets/mylogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
-import axios from 'axios';
-//import './Product.css'; // Import the CSS file
+import api from './api';
 
 function Product() {
     const [product, setProduct] = useState({});
@@ -18,7 +15,7 @@ function Product() {
     const [status, setStatus] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:80/product/${productId}`)
+        api.get(`/product/${productId}`)
             .then((res) => {
                 setProduct(res.data);
                 setStatus(true);
@@ -29,7 +26,7 @@ function Product() {
     }, [productId]);
 
     useEffect(() => {
-        axios.get(`http://localhost:80/category`, {
+        api.get(`/category`, {
         }).then(res => res.data)
             .then(categoryData => {
                 setCategories(categoryData);
