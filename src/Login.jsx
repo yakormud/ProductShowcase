@@ -41,7 +41,7 @@ const Login = () => {
                 sessionStorage.setItem('token', res.data.token);
                 axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
                 setAuth(true);
-                // console.log(auth);
+                console.log(getPayload());
                 Swal.fire({ icon: 'success', title: 'done!', text: 'done!' });
             } else {
                 delete axios.defaults.headers.common["Authorization"];
