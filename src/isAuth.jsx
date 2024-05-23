@@ -9,7 +9,7 @@ export const isAuth = () => {
     }
     try {
         const token = authorization.replace("Bearer ", "");
-        jwtDecode(token); // This will throw an error if the token is invalid
+        jwtDecode(token);
         return true;
     } catch (e) {
         return false;

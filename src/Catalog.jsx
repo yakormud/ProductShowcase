@@ -83,9 +83,6 @@ function Catalog() {
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
-  const checkAuth = e =>{
-    console.log(auth);
-  }
 
   return (
     <div className='catalog-container'>
