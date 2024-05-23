@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
-import './App.css'; // นำเข้าไฟล์ CSS
 
 function Product() {
     const [product, setProduct] = useState({});
@@ -19,8 +18,6 @@ function Product() {
         axios.get(`http://localhost:80/product/${productId}`)
             .then((res) => {
                 setProduct(res.data);
-
-                // ทำคำขอเพิ่มเติมสำหรับข้อมูลหมวดหมู่
                 return axios.get(`http://localhost:80/category/${res.data.CategoryID}`);
             })
             .then((res) => {
@@ -48,7 +45,7 @@ function Product() {
                 <p className="product-price">Price: ${product.ProductPrice}</p>
                 <div className="product-details">
                     <p><strong>Description:</strong> {product.ProductDetail}</p>
-                    <p><strong>Category:</strong> {category.CategoryID}</p>
+                    <p><strong>Category:</strong> {category.CategoryName}</p>
                     <p><strong>Stock:</strong> {product.ProductStock}</p>
                 </div>
             </div>
