@@ -516,9 +516,10 @@ body {
 }
 
 .product-image {
-  width: 300px;
+  width: 250px;
   height: auto;
   border-radius: 8px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
