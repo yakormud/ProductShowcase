@@ -9,24 +9,40 @@ import axios from 'axios';
 
 function Product() {
     const [product, setProduct] = useState({});
-    const [category, setCategory] = useState({});
+    const [categoryMap, setCategoryMap] = useState({});
+    const [categories, setCategories] = useState([]);
     const navigate = useNavigate();
     const queryParameters = new URLSearchParams(window.location.search);
     const productId = queryParameters.get("id");
+    const [status, setStatus] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:80/product/${productId}`)
             .then((res) => {
                 setProduct(res.data);
-                return axios.get(`http://localhost:80/category/${res.data.CategoryID}`);
-            })
-            .then((res) => {
-                setCategory(res.data);
+                setStatus(true);
             })
             .catch((error) => {
                 console.error('Error fetching product or category:', error);
             });
     }, [productId]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:80/category`, {
+        }).then(res => res.data)
+            .then(categoryData => {
+                setCategories(categoryData);
+                // console.log(categories);
+                const categoryHashMap = categoryData.reduce((map, category) => {
+                    map[category.CategoryID] = category.CategoryName;
+                    return map;
+                }, {});
+                setCategoryMap(categoryHashMap);
+                // console.log(categoryHashMap);
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+
+    }, []);
 
     const goBack = () => {
         navigate('/'); // Navigate back to the "/" page
@@ -35,20 +51,26 @@ function Product() {
     return (
         <>
             <Navbar />
-            <div className="back-arrow" onClick={goBack}>
-                        <FontAwesomeIcon icon={faArrowLeft} />
-                        <span>Back</span>
-            </div>
-            <div className="product-container">
-                <h1 className="product-name">{product.ProductName}</h1>
-                {product.PathToPhoto && <img src={product.PathToPhoto} alt={product.ProductName} className="product-image" />}
-                <p className="product-price">Price: ${product.ProductPrice}</p>
-                <div className="product-details">
-                    <p><strong>Description:</strong> {product.ProductDetail}</p>
-                    <p><strong>Category:</strong> {category.CategoryName}</p>
-                    <p><strong>Stock:</strong> {product.ProductStock}</p>
-                </div>
-            </div>
+            {
+                status === false ? (<p>Loading</p>) : (
+                    <div>
+                        <div className="back-arrow" onClick={goBack}>
+                            <FontAwesomeIcon icon={faArrowLeft} />
+                            <span>Back</span>
+                        </div>
+                        <div className="product-container">
+                            <h1 className="product-name">{product.ProductName}</h1>
+                            {product.PathToPhoto && <img src={product.PathToPhoto} alt={product.ProductName} className="product-image" />}
+                            <p className="product-price">Price : {product.ProductPrice} $</p>
+                            <div className="product-details">
+                                <p><strong>Description :</strong> {product.ProductDetail}</p>
+                                <p><strong>Category :</strong> {categoryMap[product.CategoryID] || 'Category Not Found'}</p>
+                                <p><strong>Stock :</strong> {product.ProductStock}</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
         </>
     );
 }
