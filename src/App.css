@@ -552,10 +552,8 @@ body {
   justify-content: start;
   cursor: pointer;
   top: 90px;
-  margin-top: 10%;
   font-size: 1.2em;
-  margin-bottom: 0;
-  
+  margin-bottom: 0; 
 }
 
 .back-arrow:hover {

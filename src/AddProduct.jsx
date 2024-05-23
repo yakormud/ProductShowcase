@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import defaultimage from './assets/adidas.png';
-import axios from 'axios';
+import api from './api';
 import Swal from 'sweetalert2';
 import AuthContext from './AuthContext';
 
@@ -30,7 +30,7 @@ const AddProduct = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:6352/category`, {
+        api.get(`/category`, {
         }).then((res) => res.data).then(data => {
             setCategories(data);
         }).catch((error) => {
@@ -41,7 +41,7 @@ const AddProduct = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        console.log(formData);
+        // console.log(formData);
     };
 
     const handleImageChange = (e) => {
@@ -69,7 +69,7 @@ const AddProduct = () => {
             Object.keys(formData).forEach((key) => {
                 formDataToSend.append(key, formData[key]);
             });
-            await axios.post('http://localhost:6352/uploadproducts', formDataToSend);
+            await api.post('/uploadproducts', formDataToSend);
             console.log('Product added successfully!');
 
             // Show success message using SweetAlert

@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
-import axios from 'axios';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
 import adidaspic from './assets/adidas.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass,faUser } from '@fortawesome/free-solid-svg-icons';
 import AuthContext from './AuthContext';
+import api from './api';
+
 
 function Catalog() {
   const [products, setProducts] = useState([]);
@@ -26,39 +27,14 @@ function Catalog() {
     setFormData({ ...formData, [name]: value });
     // console.log(formData);
   };
-
-
-
-  // useEffect(() => {
-  //   const hasSeenPopup = sessionStorage.getItem('hasSeenPopup');
-  //   if (!hasSeenPopup) {
-  //     // Display SweetAlert if the user hasn't seen it before
-  //     Swal.fire({
-  //       title: 'addProduct page has been successfully made, XD',
-  //       text: 'you can access it by editing url to path /addProduct, cuz I\'m too lazy to make a button',
-  //       icon: 'info',
-  //       showCancelButton: true,
-  //       confirmButtonText: 'Let me try!',
-  //       cancelButtonText: 'No, stay this page',
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         // If the user clicks "Yes, go to addProduct", navigate to the addProduct page
-  //         navigate('/addProduct');
-  //         sessionStorage.setItem('hasSeenPopup', true);
-  //       }
-  //     });
-  //   }
-  // }, [history]);
-
-
   useEffect(() => {
-    axios.get(`http://localhost:6352/product`, {
+    api.get(`/product`, {
     }).then((res) => res.data).then(data => {
       setProducts(data);
     }).catch((error) => {
       console.log(error);
     });
-    axios.get(`http://localhost:6352/category`, {
+    api.get(`/category`, {
     }).then(res => res.data)
       .then(categoryData => {
         setCategories(categoryData);
@@ -79,7 +55,7 @@ function Catalog() {
     products.forEach(product => {
       if (product.PathToPhoto) {
         const fileName = product.PathToPhoto.split("\\").pop();
-        axios.get(`http://localhost:6352/image/${fileName}`)
+        api.get(`/image/${fileName}`)
           .then((res) => res.data)
           .then(data => {
             setProductImages(prevImages => ({
