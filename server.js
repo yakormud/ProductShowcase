@@ -215,7 +215,7 @@ app.get('/image/:filename', (req, res) => {
 });
 
 // Start the server
-const PORT = 80;
+const PORT = 6352;
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });

@@ -34,7 +34,7 @@ const Login = () => {
                 showConfirmButton: false,
             });
         try {
-            const res = await axios.post(`http://localhost:80/auth`, form)
+            const res = await axios.post(`http://localhost:6352/auth`, form)
             // console.log(res.data);
 
             if (res.data.token) {

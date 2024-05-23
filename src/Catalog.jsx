@@ -52,13 +52,13 @@ function Catalog() {
 
 
   useEffect(() => {
-    axios.get(`http://localhost:80/product`, {
+    axios.get(`http://localhost:6352/product`, {
     }).then((res) => res.data).then(data => {
       setProducts(data);
     }).catch((error) => {
       console.log(error);
     });
-    axios.get(`http://localhost:80/category`, {
+    axios.get(`http://localhost:6352/category`, {
     }).then(res => res.data)
       .then(categoryData => {
         setCategories(categoryData);
@@ -79,7 +79,7 @@ function Catalog() {
     products.forEach(product => {
       if (product.PathToPhoto) {
         const fileName = product.PathToPhoto.split("\\").pop();
-        axios.get(`http://localhost:80/image/${fileName}`)
+        axios.get(`http://localhost:6352/image/${fileName}`)
           .then((res) => res.data)
           .then(data => {
             setProductImages(prevImages => ({
@@ -107,9 +107,6 @@ function Catalog() {
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
-  const checkAuth = e =>{
-    console.log(auth);
-  }
 
   return (
     <div className='catalog-container'>

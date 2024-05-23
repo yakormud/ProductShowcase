@@ -18,7 +18,7 @@ function Product() {
     const [status, setStatus] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:80/product/${productId}`)
+        axios.get(`http://localhost:6352/product/${productId}`)
             .then((res) => {
                 setProduct(res.data);
                 setStatus(true);
@@ -29,7 +29,7 @@ function Product() {
     }, [productId]);
 
     useEffect(() => {
-        axios.get(`http://localhost:80/category`, {
+        axios.get(`http://localhost:6352/category`, {
         }).then(res => res.data)
             .then(categoryData => {
                 setCategories(categoryData);

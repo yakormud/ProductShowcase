@@ -30,7 +30,7 @@ const AddProduct = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:80/category`, {
+        axios.get(`http://localhost:6352/category`, {
         }).then((res) => res.data).then(data => {
             setCategories(data);
         }).catch((error) => {
@@ -69,7 +69,7 @@ const AddProduct = () => {
             Object.keys(formData).forEach((key) => {
                 formDataToSend.append(key, formData[key]);
             });
-            await axios.post('http://localhost:80/uploadproducts', formDataToSend);
+            await axios.post('http://localhost:6352/uploadproducts', formDataToSend);
             console.log('Product added successfully!');
 
             // Show success message using SweetAlert
