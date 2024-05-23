@@ -507,6 +507,8 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  position: relative; /* Ensure the container is the reference point for the back arrow */
+  top: 45px;
 }
 
 .product-name {
@@ -548,14 +550,26 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
-  margin: 20px;
-  color: #007bff;
+  color: #666;
+  position: absolute;
+  top: 90px; /* Adjust this value based on your logo height */
+  left: 265px;
+  font-size: 1.2em;
 }
 
 .back-arrow:hover {
-  color: #0056b3;
+  color: #666;
 }
 
 .back-arrow span {
   margin-left: 8px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15%;
+  font-size: 1.2em;
+  color: #000000;
 }

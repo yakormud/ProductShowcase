@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
+//import './Product.css'; // Import the CSS file
 
 function Product() {
     const [product, setProduct] = useState({});
@@ -32,16 +33,13 @@ function Product() {
         }).then(res => res.data)
             .then(categoryData => {
                 setCategories(categoryData);
-                // console.log(categories);
                 const categoryHashMap = categoryData.reduce((map, category) => {
                     map[category.CategoryID] = category.CategoryName;
                     return map;
                 }, {});
                 setCategoryMap(categoryHashMap);
-                // console.log(categoryHashMap);
             })
             .catch(error => console.error('Error fetching categories:', error));
-
     }, []);
 
     const goBack = () => {
@@ -52,7 +50,7 @@ function Product() {
         <>
             <Navbar />
             {
-                status === false ? (<p>Loading</p>) : (
+                status === false ? (<p className="loading">Loading...</p>) : (
                     <div>
                         <div className="back-arrow" onClick={goBack}>
                             <FontAwesomeIcon icon={faArrowLeft} />
