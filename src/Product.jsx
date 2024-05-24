@@ -12,6 +12,7 @@ function Product() {
     const navigate = useNavigate();
     const queryParameters = new URLSearchParams(window.location.search);
     const productId = queryParameters.get("id");
+    const [productImage, setProductImage] = useState("");
     const [status, setStatus] = useState(false);
 
     useEffect(() => {
@@ -24,6 +25,26 @@ function Product() {
                 console.error('Error fetching product or category:', error);
             });
     }, [productId]);
+
+    useEffect(() => {
+        if (product.PathToPhoto) {
+          let fileName;
+          if (product.PathToPhoto.includes('\\')) {
+            fileName = product.PathToPhoto.split("\\").pop();
+          } else {
+            fileName = product.PathToPhoto.split('/').pop();
+          }
+          api.get(`/image/${fileName}`)
+            .then((res) => res.data)
+            .then(data => {
+              setProductImage(data); // Store the fetched image data
+              setStatus(true);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }, [product]);
 
     useEffect(() => {
         api.get(`/category`, {
@@ -55,7 +76,7 @@ function Product() {
                         </div>
                         <div className="product-container">
                             <h1 className="product-name">{product.ProductName}</h1>
-                            {product.PathToPhoto && <img src={product.PathToPhoto} alt={product.ProductName} className="product-image" />}
+                            {productImage && <img src={productImage} alt={product.ProductName} className="product-image" />}
                             <p className="product-price">Price : {product.ProductPrice} $</p>
                             <div className="product-details">
                                 <p><strong>Description :</strong> {product.ProductDetail}</p>
