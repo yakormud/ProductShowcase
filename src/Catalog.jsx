@@ -3,7 +3,7 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import adidaspic from './assets/adidas.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass,faUser } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import AuthContext from './AuthContext';
 import api from './api';
 
@@ -53,8 +53,13 @@ function Catalog() {
   useEffect(() => {
     // Fetch images for products with pictures
     products.forEach(product => {
+      var fileName;
       if (product.PathToPhoto) {
-        const fileName = product.PathToPhoto.split("\\").pop();
+        if (product.PathToPhoto.includes('\\')) {
+          fileName = product.PathToPhoto.split("\\").pop();
+        }else{
+          fileName = product.PathToPhoto.split('/').pop();
+        }
         api.get(`/image/${fileName}`)
           .then((res) => res.data)
           .then(data => {
@@ -106,9 +111,9 @@ function Catalog() {
             ))}
           </select>
         </label>
-        { auth && (<div className="simplebutton" onClick={() => navigate("/addProduct")}>
-                    <p>Add a product</p>
-                </div>) }
+        {auth && (<div className="simplebutton" onClick={() => navigate("/addProduct")}>
+          <p>Add a product</p>
+        </div>)}
       </div>
       <div className='content-bar'>
         <div className='content-header'>

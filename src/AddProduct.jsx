@@ -100,6 +100,8 @@ const AddProduct = () => {
                 title: 'Error!',
                 text: 'Failed to add product. Please try again later.',
             });
+            setIsSubmitting(false);
+            navigate('/');
         }
     };
 
